@@ -18,8 +18,24 @@ Benz_Flutter is a new Flutter project that serves as a starting point for buildi
 - **VSCode/Android Studio**: Recommended IDEs for Flutter development with essential plugins.
 
 ## Project Structure
-benz_flutter/ │ ├── lib/ │ ├── main.dart # Entry point of the application │ ├── screens/ # Folder containing all app screens │ ├── widgets/ # Reusable custom widgets │ └── utils/ # Utility functions and constants │ ├── pubspec.yaml # Flutter project configuration and dependencies └── README.md # Project documentation
-
+<pre>
+my_flutter_project/
+├── android/
+├── assets/              
+│   └── logo.png         
+├── ios/
+├── lib/
+│   ├── core/
+│   ├── data/
+│   ├── presentation/
+│   │   ├── screens/
+│   │   └── widgets/
+│   └── main.dart
+│
+├── test/
+├── pubspec.yaml         # File untuk mendeklarasikan asset
+└── README.md  
+</pre>
 
 ## Getting Started
 To run this project on your local machine, follow these steps:
