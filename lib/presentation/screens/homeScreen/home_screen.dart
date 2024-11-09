@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
-import 'account_screen.dart';
-import 'login_screen.dart';
+import '../account/account_screen.dart';
+import '../sigInSignUP/login_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -114,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 150,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: 3,
+                  itemCount: 4,
                   itemBuilder: (context, index) {
                     return Container(
                       width: 120,
