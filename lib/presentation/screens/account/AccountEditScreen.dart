@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'home_screen.dart';
-import 'login_screen.dart';
+import '../homeScreen/home_screen.dart';
+import '../sigInSignUP/login_screen.dart';
 
 class AccountEditScreen extends StatelessWidget {
   final String profileImagePath;
