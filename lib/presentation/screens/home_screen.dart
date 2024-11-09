@@ -1,9 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'account_screen.dart';
 import 'login_screen.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final AudioPlayer _audioPlayer = AudioPlayer();
+  bool _isPlaying = false; // Status audio (play/pause)
+
+  Future<void> _togglePlayPause() async {
+    try {
+      if (_isPlaying) {
+        await _audioPlayer.pause(); // Pause jika sedang bermain
+      } else {
+        await _audioPlayer.setSource(AssetSource('songs1.mp3')); // Set sumber audio dari lokal
+        await _audioPlayer.resume(); // Mulai mainkan jika dalam keadaan berhenti
+      }
+      setState(() {
+        _isPlaying = !_isPlaying; // Ubah status play/pause
+      });
+    } catch (e) {
+      print("Error saat memutar audio: $e");
+    }
+  }
+
+  @override
+  void dispose() {
+    _audioPlayer.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +77,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
         title: const Text(
-          'Guest',
+          'Bang Benz',
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: false,
@@ -100,7 +131,7 @@ class HomeScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Image.asset(
-                                'assets/ben2.png', // Ganti dengan aset gambar yang diinginkan
+                                'assets/ben2.png',
                                 height: 80,
                               ),
                               const SizedBox(height: 8),
@@ -144,7 +175,7 @@ class HomeScreen extends StatelessWidget {
                       margin: const EdgeInsets.only(bottom: 8),
                       child: ListTile(
                         leading: Image.asset(
-                          'assets/ben1.png', // Ganti dengan aset gambar yang diinginkan
+                          'assets/ben1.png',
                           height: 60,
                         ),
                         title: const Text('Heart Attack', style: TextStyle(color: Colors.black)),
@@ -165,7 +196,13 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        trailing: const Icon(Icons.play_arrow, color: Colors.black),
+                        trailing: IconButton(
+                          icon: Icon(
+                            _isPlaying ? Icons.pause : Icons.play_arrow,
+                            color: Colors.black,
+                          ),
+                          onPressed: _togglePlayPause,
+                        ),
                       ),
                     );
                   },
@@ -206,7 +243,6 @@ class HomeScreen extends StatelessWidget {
               ),
             );
           } else if (index == 2) {
-            // Navigasi ke halaman LoginScreen saat Logout ditekan
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => const LoginScreen()),
