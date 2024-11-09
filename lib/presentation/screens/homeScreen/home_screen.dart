@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:audioplayers/audioplayers.dart';
 import '../account/account_screen.dart';
 import '../sigInSignUP/login_screen.dart';
+import 'audio_player_controls.dart';
+import 'audio_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -11,28 +12,52 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final AudioPlayer _audioPlayer = AudioPlayer();
-  bool _isPlaying = false; // Status audio (play/pause)
+  final AudioService _audioService = AudioService();
+  bool _isPlaying = false;
+  bool _showPlayerControls = false;
+  Duration duration = Duration.zero;
+  Duration currentPosition = Duration.zero;
+
+  @override
+  void initState() {
+    super.initState();
+    _setupAudio();
+    _checkIfPlaying();
+  }
+
+  // Cek status pemutaran saat HomeScreen dimuat kembali
+  void _checkIfPlaying() {
+    setState(() {
+      _isPlaying = _audioService.isPlaying;
+      _showPlayerControls = _isPlaying; // Menampilkan kontrol jika sedang memutar audio
+    });
+  }
+
+  void _setupAudio() {
+    _audioService.audioPlayer.onDurationChanged.listen((newDuration) {
+      setState(() {
+        duration = newDuration;
+      });
+    });
+
+    _audioService.audioPlayer.onPositionChanged.listen((newPosition) {
+      setState(() {
+        currentPosition = newPosition;
+      });
+    });
+  }
 
   Future<void> _togglePlayPause() async {
-    try {
-      if (_isPlaying) {
-        await _audioPlayer.pause(); // Pause jika sedang bermain
-      } else {
-        await _audioPlayer.setSource(AssetSource('songs1.mp3')); // Set sumber audio dari lokal
-        await _audioPlayer.resume(); // Mulai mainkan jika dalam keadaan berhenti
-      }
-      setState(() {
-        _isPlaying = !_isPlaying; // Ubah status play/pause
-      });
-    } catch (e) {
-      print("Error saat memutar audio: $e");
-    }
+    await _audioService.togglePlayPause('songs1.mp3');
+    setState(() {
+      _isPlaying = _audioService.isPlaying;
+      _showPlayerControls = true;
+    });
   }
 
   @override
   void dispose() {
-    _audioPlayer.dispose();
+    _audioService.audioPlayer.dispose();
     super.dispose();
   }
 
@@ -95,7 +120,6 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Widget Grid View
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -146,8 +170,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               const SizedBox(height: 16),
-
-              // Widget List View
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -201,13 +223,26 @@ class _HomeScreenState extends State<HomeScreen> {
                             _isPlaying ? Icons.pause : Icons.play_arrow,
                             color: Colors.black,
                           ),
-                          onPressed: _togglePlayPause,
+                          onPressed: () {
+                            _togglePlayPause();
+                            setState(() {
+                              _showPlayerControls = true;
+                            });
+                          },
                         ),
                       ),
                     );
                   },
                 ),
               ),
+              if (_showPlayerControls)
+                AudioPlayerControls(
+                  audioPlayer: _audioService.audioPlayer,
+                  isPlaying: _isPlaying,
+                  duration: duration,
+                  currentPosition: currentPosition,
+                  togglePlayPause: _togglePlayPause,
+                ),
             ],
           ),
         ),
