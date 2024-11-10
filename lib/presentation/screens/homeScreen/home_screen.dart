@@ -3,6 +3,8 @@ import '../account/account_screen.dart';
 import '../sigInSignUP/login_screen.dart';
 import 'audio_player_controls.dart';
 import 'audio_service.dart';
+import '../account/notification_screen.dart'; 
+import '../account/terms_of_service_screen.dart';   
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -25,11 +27,10 @@ class _HomeScreenState extends State<HomeScreen> {
     _checkIfPlaying();
   }
 
-  // Cek status pemutaran saat HomeScreen dimuat kembali
   void _checkIfPlaying() {
     setState(() {
       _isPlaying = _audioService.isPlaying;
-      _showPlayerControls = _isPlaying; // Menampilkan kontrol jika sedang memutar audio
+      _showPlayerControls = _isPlaying;
     });
   }
 
@@ -94,11 +95,25 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
             icon: const Icon(Icons.notifications, color: Colors.white),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const NotificationScreen(),
+                ),
+              );
+            },
           ),
           IconButton(
             icon: const Icon(Icons.settings, color: Colors.white),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const TermsOfServiceScreen(),
+                ),
+              );
+            },
           ),
         ],
         title: const Text(

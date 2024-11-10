@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import '../homeScreen/home_screen.dart';
 import '../sigInSignUP/login_screen.dart';
 import 'AccountEditScreen.dart';
+import 'notification_screen.dart';
+import 'privacy_policy_screen.dart';
+import 'terms_of_service_screen.dart';
 
 class AccountScreen extends StatelessWidget {
   final String profileImagePath;
@@ -77,11 +80,38 @@ class AccountScreen extends StatelessWidget {
                 },
               ),
               const Divider(color: Colors.white70),
-              _buildSettingItem(context, 'Notifikasi'),
+              _buildSettingItem(
+                context,
+                'Notifikasi',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const NotificationScreen()),
+                  );
+                },
+              ),
               const Divider(color: Colors.white70),
-              _buildSettingItem(context, 'Privacy Policy'),
+              _buildSettingItem(
+                context,
+                'Privacy Policy',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const PrivacyPolicyScreen()),
+                  );
+                },
+              ),
               const Divider(color: Colors.white70),
-              _buildSettingItem(context, 'Terms of Service'),
+              _buildSettingItem(
+                context,
+                'Terms of Service',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const TermsOfServiceScreen()),
+                  );
+                },
+              ),
               const Divider(color: Colors.white70),
             ],
           ),

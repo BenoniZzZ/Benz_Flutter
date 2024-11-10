@@ -17,73 +17,109 @@ class AccountEditScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Kelola Akun'),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Colors.deepPurple.shade100,
+                Colors.purpleAccent.shade100,
+                Colors.blueAccent.shade100,
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+        ),
+      ),
       body: Container(
+        width: double.infinity,
+        height: double.infinity,
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Colors.blueGrey.shade100,
-              Colors.blueGrey.shade200,
-              Colors.blueGrey.shade300,
+              Colors.deepPurple.shade100,
+              Colors.purpleAccent.shade100,
+              Colors.blueAccent.shade100,
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
         ),
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              // Profil Image and Name
-              Column(
-                children: [
-                  Container(
-                    width: 100,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                      image: DecorationImage(
-                        image: AssetImage(profileImagePath),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    name,
-                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black87),
-                  ),
-                  Text(
-                    university,
-                    style: const TextStyle(fontSize: 14, color: Colors.black54),
-                  ),
-                  const SizedBox(height: 10),
-                  ElevatedButton(
-                    onPressed: () {
-                      // Implementasikan logika untuk mengubah gambar dari aset lokal
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white, // Mengubah warna latar belakang tombol
-                      foregroundColor: Colors.black87, // Mengubah warna teks tombol
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                    ),
-                    child: const Text('Ubah Profil'),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 30),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(height: 10), // Mengurangi space kosong di atas
 
-              // Form Fields
-              _buildTextField(label: 'Email'),
-              const SizedBox(height: 16),
-              _buildTextField(label: 'Nama'),
-              const SizedBox(height: 16),
-              _buildTextField(label: 'Nomor Telepon'),
-              const SizedBox(height: 16),
-              _buildTextField(label: 'Alamat'),
-            ],
+                // Profile Image and Name
+                Column(
+                  children: [
+                    Container(
+                      width: 100,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        image: DecorationImage(
+                          image: AssetImage(profileImagePath),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Text(
+                      name,
+                      style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    ),
+                    Text(
+                      university,
+                      style: const TextStyle(fontSize: 14, color: Colors.white),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 30),
+
+                // Form Fields
+                _buildTextField(label: 'Email'),
+                const SizedBox(height: 16),
+                _buildTextField(label: 'Nama'),
+                const SizedBox(height: 16),
+                _buildTextField(label: 'Nomor Telepon'),
+                const SizedBox(height: 16),
+                _buildTextField(label: 'Alamat'),
+                const SizedBox(height: 30),
+
+                // Ubah Profil Button
+                ElevatedButton(
+                  onPressed: () {
+                    // Implementasikan logika untuk mengubah gambar dari aset lokal
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    foregroundColor: Colors.black87,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                  child: const Text('Ubah Profil'),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -128,7 +164,7 @@ class AccountEditScreen extends StatelessWidget {
       children: [
         Text(
           label,
-          style: const TextStyle(fontSize: 14, color: Colors.black54),
+          style: const TextStyle(fontSize: 14, color: Colors.white70),
         ),
         const SizedBox(height: 4),
         TextField(
