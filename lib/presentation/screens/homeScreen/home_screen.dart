@@ -1,10 +1,11 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import '../account/account_screen.dart';
 import '../sigInSignUP/login_screen.dart';
 import 'audio_player_controls.dart';
 import 'audio_service.dart';
-import '../account/notification_screen.dart'; 
-import '../account/terms_of_service_screen.dart';   
+import '../account/notification_screen.dart';
+import '../account/terms_of_service_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -20,11 +21,39 @@ class _HomeScreenState extends State<HomeScreen> {
   Duration duration = Duration.zero;
   Duration currentPosition = Duration.zero;
 
+  // Variabel untuk pengaturan perubahan gambar di List View
+  int _currentImageIndex = 0;
+  late Timer _imageChangeTimer;
+
+  // Grid View 
+  final List<String> _gridImagePaths = [
+    'assets/images/ben1.png',
+    'assets/images/ben2.png',
+    'assets/images/ben3.png', 
+  ];
+
+  //  List View
+  final List<String> _imagePaths = [
+    'assets/images/ben1.png',
+    'assets/images/ben2.png',
+    'assets/images/ben3.png', 
+  ];
+
   @override
   void initState() {
     super.initState();
     _setupAudio();
     _checkIfPlaying();
+    _startImageChangeTimer(); // Menambahkan timer untuk perubahan gambar
+  }
+
+  void _startImageChangeTimer() {
+    _imageChangeTimer = Timer.periodic(const Duration(seconds: 3), (timer) {
+      setState(() {
+        // Mengubah indeks gambar secara berkala
+        _currentImageIndex = (_currentImageIndex + 1) % _imagePaths.length;
+      });
+    });
   }
 
   void _checkIfPlaying() {
@@ -59,6 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void dispose() {
     _audioService.audioPlayer.dispose();
+    _imageChangeTimer.cancel(); // Menghentikan timer saat widget dihancurkan
     super.dispose();
   }
 
@@ -84,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
               context,
               MaterialPageRoute(
                 builder: (context) => const AccountScreen(
-                  profileImagePath: 'assets/ben2.png',
+                  profileImagePath: 'assets/images/ben2.png',
                   name: 'Benoni Manase Tarigan',
                   university: 'Universitas Proklamasi 45 YK',
                 ),
@@ -153,7 +183,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 150,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: 4,
+                  itemCount: 4, // Tetap 4 item
                   itemBuilder: (context, index) {
                     return Container(
                       width: 120,
@@ -170,7 +200,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Image.asset(
-                                'assets/ben2.png',
+                                _gridImagePaths[index % _gridImagePaths.length], // Mengulang gambar dengan operator modulus
                                 height: 80,
                               ),
                               const SizedBox(height: 8),
@@ -212,7 +242,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       margin: const EdgeInsets.only(bottom: 8),
                       child: ListTile(
                         leading: Image.asset(
-                          'assets/ben1.png',
+                          _imagePaths[_currentImageIndex], // Menggunakan indeks untuk gambar yang berubah
                           height: 60,
                         ),
                         title: const Text('Heart Attack', style: TextStyle(color: Colors.black)),
@@ -286,7 +316,7 @@ class _HomeScreenState extends State<HomeScreen> {
               context,
               MaterialPageRoute(
                 builder: (context) => const AccountScreen(
-                  profileImagePath: 'assets/ben2.png',
+                  profileImagePath: 'assets/images/ben2.png',
                   name: 'Benoni Manase Tarigan',
                   university: 'Universitas Proklamasi 45 YK',
                 ),

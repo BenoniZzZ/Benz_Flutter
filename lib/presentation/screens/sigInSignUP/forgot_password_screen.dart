@@ -52,7 +52,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       MaterialPageRoute(builder: (context) => const LoginScreen()),
                     );
                   },
-                  child: Image.asset('assets/responsi.png'), // Logo yang bisa diklik
+                  child: Image.asset('assets/images/responsi.png'), // Logo yang bisa diklik
                 ),
                 const SizedBox(height: 20),
                 const Text(

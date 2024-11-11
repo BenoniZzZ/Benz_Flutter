@@ -30,7 +30,7 @@ class SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-             Image.asset('assets/responsi.png'), // Tambahkan logo sesuai kebutuhan
+             Image.asset('assets/images/responsi.png'), // Tambahkan logo sesuai kebutuhan
             const SizedBox(height: 20),
             const Text(
               'Halo Dek',

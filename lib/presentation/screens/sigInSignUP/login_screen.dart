@@ -58,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Image.asset('assets/responsi.png'), // Logo pada login screen
+                Image.asset('assets/images/responsi.png'), // Logo pada login screen
                 const SizedBox(height: 20),
                 const Text(
                   'Masuk',
